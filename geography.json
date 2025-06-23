@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "type": "crocette",
+    "question": "What is the longest river in the world?",
+    "options": {
+      "A": "Nile",
+      "B": "Amazon",
+      "C": "Mississippi",
+      "D": "Yangtze",
+      "E": "Danube"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 2,
+    "type": "dariempire",
+    "question": "The capital of France is ________.",
+    "answer": "Paris"
+  },
+  {
+    "id": 3,
+    "type": "crocette",
+    "question": "Which of these countries does NOT border Italy?",
+    "options": {
+      "A": "Switzerland",
+      "B": "France",
+      "C": "Germany",
+      "D": "Austria",
+      "E": "Slovenia"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 4,
+    "type": "dariempire",
+    "question": "The largest desert in the world is the ________.",
+    "answer": "Sahara"
+  },
+  {
+    "id": 5,
+    "type": "crocette",
+    "question": "On which continent is Mount Kilimanjaro located?",
+    "options": {
+      "A": "Asia",
+      "B": "South America",
+      "C": "Europe",
+      "D": "Africa",
+      "E": "Oceania"
+    },
+    "answer": "D"
+  },
+  {
+    "id": 6,
+    "type": "dariempire",
+    "question": "The ________ Sea borders the western coast of Italy.",
+    "answer": "Tyrrhenian"
+  },
+  {
+    "id": 7,
+    "type": "crocette",
+    "question": "What is the highest mountain in the world?",
+    "options": {
+      "A": "K2",
+      "B": "Everest",
+      "C": "Elbrus",
+      "D": "Aconcagua",
+      "E": "Denali"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 8,
+    "type": "dariempire",
+    "question": "The largest lake in Italy is Lake ________.",
+    "answer": "Garda"
+  }
+]
