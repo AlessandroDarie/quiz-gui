@@ -118,7 +118,7 @@ You can use it as a template to create more question sets (e.g., history, scienc
 </p>
 <p align="center">
   <img src="screenshots/incorrect_answer.png" width="500"><br>
-  <em>Example of correct answer</em>
+  <em>Example of incorrect answer</em>
 </p>
 <p align="center">
   <img src="screenshots/quiz_finished.png" width="500"><br>
