@@ -114,15 +114,15 @@ You can use it as a template to create more question sets (e.g., history, scienc
 </p>
 <p align="center">
   <img src="screenshots/correct_answer.png" width="500"><br>
-  <em>Main menu of the quiz</em>
+  <em>Example of correct answer</em>
 </p>
 <p align="center">
   <img src="screenshots/incorrect_answer.png" width="500"><br>
-  <em>Main menu of the quiz</em>
+  <em>Example of correct answer</em>
 </p>
 <p align="center">
   <img src="screenshots/quiz_finished.png" width="500"><br>
-  <em>Main menu of the quiz</em>
+  <em>Quiz finished</em>
 </p>
 
 ---
