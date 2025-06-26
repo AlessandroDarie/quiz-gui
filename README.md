@@ -123,7 +123,7 @@ You can use them as templates to create more question sets (e.g., science, langu
 </p>
 <p align="center">
   <img src="screenshots/incorrect_answer.png" width="500"><br>
-  <em>Example of correct answer</em>
+  <em>Example of incorrect answer</em>
 </p>
 <p align="center">
   <img src="screenshots/quiz_finished.png" width="500"><br>
