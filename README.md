@@ -14,6 +14,7 @@ Welcome to **Quiz GUI**, a simple and intuitive Python application that lets you
 - Retry wrong answers or retake the whole quiz in a new order
 - Timer for total quiz time
 - Fully compatible with any **custom JSON question database**
+- **Database selection menu:** At startup, select any `.json` question file from the `database/` folder. You don't need to edit the code to change quiz.
 
 ---
 
@@ -30,7 +31,10 @@ Welcome to **Quiz GUI**, a simple and intuitive Python application that lets you
    ```
    Or download as a .zip and unzip it.
 
-3. **Run the program**
+3. **Place your question files in the database/ folder**
+  You can use the provided example files (geography.json, history.json, etc.) or add your own.
+
+4. **Run the program**
    - **Easiest:**  
      Double-click on `quiz_gui.py`  
    - **From terminal:**  
@@ -44,19 +48,20 @@ Welcome to **Quiz GUI**, a simple and intuitive Python application that lets you
 
 - `quiz_gui.py`  – Main program (Tkinter)
 - `quiz_gui.pyw` – No-console version for Windows (optional)
-- `geography.json` – Example question database (editable)
+- `database/` – Folder containing all your quiz .json databases
 - `LICENSE` – MIT License
 - `README.md` – This file
-- `screenshots/` – (optional) App screenshots
+- `screenshots/` – App screenshots
 
 ---
 
 ## 📚 How it works
 
-1. **Select a quiz mode** (ordered, shuffle, only multiple choice, only fill-in)
-2. **Choose how many (or which) questions** you want to do (you can set a range, e.g., 20-40)
-3. **Answer the questions** presented by the app
-4. At the end, you can:
+1. At startup, select the question database (any .json file in the database/ folder; the extension is hidden in the menu).
+2. **Select a quiz mode** (ordered, shuffle, only multiple choice, only fill-in)
+3. **Choose how many (or which) questions** you want to do (you can set a range, e.g., 20-40)
+4. **Answer the questions** presented by the app
+5. At the end, you can:
     - Retry only the incorrect answers
     - Retake all questions in a new random order
     - Return to the main menu and change mode
@@ -101,8 +106,8 @@ You can create your own `.json` question file and point the program to it (by ch
 
 ## 🌍 Example file
 
-The included `geography.json` file contains several geography questions (multiple choice and fill-in).  
-You can use it as a template to create more question sets (e.g., history, science, etc.).
+The included geography.json and history.json files contain example questions (multiple choice and fill-in).
+You can use them as templates to create more question sets (e.g., science, languages, etc.).
 
 ---
 

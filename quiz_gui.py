@@ -6,6 +6,7 @@ import time
 import random
 import os
 import string
+import glob
 
 PRIMARY   = "#ECECEC"
 SECONDARY = "#222831"
@@ -17,6 +18,41 @@ FONT_TITLE = ("Segoe UI", 22, "bold")
 FONT_SMALL = ("Segoe UI", 11)
 
 JSON_FILENAME = "geography.json"
+
+class DatabaseSelector:
+    def __init__(self, master):
+        self.master = master
+        self.master.geometry("720x600")
+        self.master.title("Select Database")
+        self.master.configure(bg=SECONDARY)
+
+        self.frame = tk.Frame(master, bg=SECONDARY, padx=50, pady=50)
+        self.frame.grid(row=0, column=0, sticky="nsew")
+        master.grid_rowconfigure(0, weight=1)
+        master.grid_columnconfigure(0, weight=1)
+
+
+        tk.Label(self.frame, text="Select the database to use:", font=FONT_TITLE, bg=SECONDARY, fg=PRIMARY, pady=30).pack()
+
+        json_files = glob.glob("database/*.json")
+        if not json_files:
+            tk.Label(self.frame, text="No JSON files found in the 'database' folder!", font=FONT_BIG, bg=SECONDARY, fg=ERROR).pack()
+            return
+
+        for filename in json_files:
+            base = os.path.basename(filename)
+            name = os.path.splitext(base)[0]
+            btn = tk.Button(
+                self.frame, text=name, font=FONT_BIG, bg=ACCENT, fg="white", width=35, pady=2,
+                command=lambda f=filename: self.select_db(f)
+            )
+            btn.pack(pady=5)
+
+        tk.Button(self.frame, text="Exit", font=FONT_BIG, bg="#F05454", fg="white", width=35, pady=2, command=master.destroy).pack(pady=(30,0))
+
+    def select_db(self, filename):
+        self.frame.destroy()
+        StartScreen(self.master, filename)
 
 class QuizApp:
     def __init__(self, master, questions, mode, filename):
@@ -127,61 +163,35 @@ class QuizApp:
             total = len(self.questions)
             errors = total - score
 
-            if errors > 0:
-                msg = (f"Quiz finished! You scored {score}/{total}.\n"
-                    f"Total time: {time_str}\n"
-                    f"You made {errors} mistakes.\n"
-                    "Would you like to retry only the wrong questions?")
-                retry_errors = messagebox.askyesno("Quiz finished", msg)
-                if retry_errors:
-                    self.questions = list(self.error_questions)
-                    self.index = 0
-                    self.score = 0
-                    self.error_questions = []
-                    self.is_retry = True
-                    self.start_time = time.time()
-                    self.next_question()
-                    return
-                else:
-                    msg2 = ("Would you like to retry all the questions you just did "
-                            "in a different order?")
-                    shuffle_retry = messagebox.askyesno("Quiz finished", msg2)
-                    if shuffle_retry:
-                        questions = self.questions[:]
-                        random.shuffle(questions)
-                        self.questions = questions
-                        self.index = 0
-                        self.score = 0
-                        self.error_questions = []
-                        self.is_retry = True
-                        self.start_time = time.time()
-                        self.next_question()
-                        return
-                    else:
-                        self.container.destroy()
-                        StartScreen(self.master, self.filename)
-                        return
+            dialog = EndQuizDialog(self.master, score, total, errors, time_str, errors > 0)
+            self.master.wait_window(dialog)
+            choice = dialog.result
+
+            if choice == 'errors':
+                self.questions = list(self.error_questions)
+                self.index = 0
+                self.score = 0
+                self.error_questions = []
+                self.is_retry = True
+                self.start_time = time.time()
+                self.next_question()
+                return
+            elif choice == 'shuffle':
+                questions = self.questions[:]
+                random.shuffle(questions)
+                self.questions = questions
+                self.index = 0
+                self.score = 0
+                self.error_questions = []
+                self.is_retry = True
+                self.start_time = time.time()
+                self.next_question()
+                return
             else:
-                msg = (f"Quiz finished! You scored {score}/{total}.\n"
-                    f"Total time: {time_str}\n"
-                    "All answers are correct!\n"
-                    "Would you like to retry all questions in a different order?")
-                shuffle_retry = messagebox.askyesno("Quiz finished", msg)
-                if shuffle_retry:
-                    questions = self.questions[:]
-                    random.shuffle(questions)
-                    self.questions = questions
-                    self.index = 0
-                    self.score = 0
-                    self.error_questions = []
-                    self.is_retry = True
-                    self.start_time = time.time()
-                    self.next_question()
-                    return
-                else:
-                    self.container.destroy()
-                    StartScreen(self.master, self.filename)
-                    return
+                self.container.destroy()
+                DatabaseSelector(self.master)
+                return
+
 
         q = self.questions[self.index]
         if self.mode == "normal":
@@ -245,6 +255,41 @@ class QuizApp:
         self.container.destroy()
         StartScreen(self.master, self.filename)
 
+class EndQuizDialog(tk.Toplevel):
+    def __init__(self, parent, score, total, errors, elapsed, has_errors):
+        super().__init__(parent)
+        self.result = None
+        self.title("Quiz finished")
+        self.configure(bg=SECONDARY)
+        self.geometry("380x280")
+        msg = f"Quiz finished!\nYou scored {score}/{total}.\nTotal time: {elapsed}\n"
+        if has_errors:
+            msg += f"You made {errors} mistake{'s' if errors != 1 else ''}."
+        else:
+            msg += "All answers are correct!"
+
+        label = tk.Label(self, text=msg, font=FONT_BIG, bg=SECONDARY, fg=PRIMARY, wraplength=340, justify="center")
+        label.pack(pady=(25,18))
+
+        btn_frame = tk.Frame(self, bg=SECONDARY)
+        btn_frame.pack(pady=5)
+
+        if has_errors:
+            tk.Button(btn_frame, text="Retry only wrong answers", width=28, font=FONT_SMALL, bg=ACCENT, fg="white",
+                      command=lambda: self._set_and_close('errors')).pack(pady=4)
+        tk.Button(btn_frame, text="Retry all questions (shuffle)", width=28, font=FONT_SMALL, bg=ACCENT, fg="white",
+                  command=lambda: self._set_and_close('shuffle')).pack(pady=4)
+        tk.Button(btn_frame, text="Back to menu", width=28, font=FONT_SMALL, bg="#CCCCCC", fg="#222831",
+                  command=lambda: self._set_and_close('menu')).pack(pady=4)
+
+        self.grab_set()
+        self.protocol("WM_DELETE_WINDOW", lambda: self._set_and_close('menu'))
+
+    def _set_and_close(self, result):
+        self.result = result
+        self.grab_release()
+        self.destroy()
+
 class StartScreen:
     def __init__(self, master, filename):
         self.master = master
@@ -282,8 +327,8 @@ class StartScreen:
         self.dariempire_btn.pack(pady=(0,10), anchor="center")
         self.dariempire_shuffle_btn = tk.Button(self.frame,text="Fill in the blank only (shuffle)",font=FONT_BIG,bg=ACCENT,fg="white",width=25,pady=1,command=self.start_dariempire_shuffle,activebackground=PRIMARY)
         self.dariempire_shuffle_btn.pack(pady=(0,10), anchor="center")
-        self.exit_btn = tk.Button(self.frame, text="Exit", font=FONT_BIG, bg="#F05454", fg="white", width=25, pady=1, command=self.master.destroy, activebackground="#B22222")
-        self.exit_btn.pack(pady=(2, 0), anchor="center")
+        self.back_btn = tk.Button(self.frame, text="Back", font=FONT_BIG, bg="#F05454", fg="white", width=25, pady=1, command=self.back_to_dbselect, activebackground="#B22222")
+        self.back_btn.pack(pady=(2, 0), anchor="center")
 
     def on_resize(self, event):
         new_wrap = max(300, event.width - 80)
@@ -415,7 +460,11 @@ class StartScreen:
             selected = dariempire
         QuizApp(self.master, selected, "shuffle", self.filename)
 
+    def back_to_dbselect(self):
+        self.container.destroy()
+        DatabaseSelector(self.master)
+
 if __name__ == "__main__":
     root = tk.Tk()
-    StartScreen(root, JSON_FILENAME)
+    DatabaseSelector(root)
     root.mainloop()

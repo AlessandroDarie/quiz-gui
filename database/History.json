@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "type": "crocette",
+    "question": "Who was the first President of the United States?",
+    "options": {
+      "A": "Abraham Lincoln",
+      "B": "George Washington",
+      "C": "Thomas Jefferson",
+      "D": "John Adams",
+      "E": "James Madison"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 2,
+    "type": "dariempire",
+    "question": "The Great Wall of ________ is one of the Seven Wonders of the World.",
+    "answer": "China"
+  },
+  {
+    "id": 3,
+    "type": "crocette",
+    "question": "In which year did World War II end?",
+    "options": {
+      "A": "1918",
+      "B": "1939",
+      "C": "1945",
+      "D": "1963",
+      "E": "1950"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 4,
+    "type": "dariempire",
+    "question": "The Magna Carta was signed in the year ________.",
+    "answer": "1215"
+  },
+  {
+    "id": 5,
+    "type": "crocette",
+    "question": "Who wrote the Declaration of Independence?",
+    "options": {
+      "A": "Benjamin Franklin",
+      "B": "John Hancock",
+      "C": "Alexander Hamilton",
+      "D": "Thomas Jefferson",
+      "E": "George Washington"
+    },
+    "answer": "D"
+  },
+  {
+    "id": 6,
+    "type": "dariempire",
+    "question": "The city of ________ was famously destroyed by a volcanic eruption in AD 79.",
+    "answer": "Pompeii"
+  },
+  {
+    "id": 7,
+    "type": "crocette",
+    "question": "Which empire was ruled by Genghis Khan?",
+    "options": {
+      "A": "Roman Empire",
+      "B": "Mongol Empire",
+      "C": "Ottoman Empire",
+      "D": "Persian Empire",
+      "E": "British Empire"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 8,
+    "type": "dariempire",
+    "question": "The ________ Revolution began in 1789 and led to the rise of Napoleon.",
+    "answer": "French"
+  }
+]
